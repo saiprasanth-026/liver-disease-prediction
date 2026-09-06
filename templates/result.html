@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Prediction Result</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🩺 Prediction Result</h1>
+        <p>Based on the values you entered</p>
+    </div>
+
+    <div class="result-box">
+        {% if prediction == 1 %}
+            <div class="badge positive">⚠️ Liver Disease Likely</div>
+        {% else %}
+            <div class="badge negative">✅ Healthy Liver</div>
+        {% endif %}
+
+        <div class="confidence">Model confidence: {{ confidence }}%</div>
+        <div class="bar-wrap">
+            <div class="bar-fill" style="width: {{ confidence }}%;">{{ confidence }}%</div>
+        </div>
+
+        <div class="feature-list">
+            <strong>Top factors the model weighed most:</strong><br>
+            {% for feat, imp in top_features %}
+                {{ feat }} — {{ imp }}%<br>
+            {% endfor %}
+        </div>
+
+        <a class="back-link" href="/">⬅ Try another patient</a>
+    </div>
+
+    <div class="footer-note">Random Forest Classifier trained on liver function test data</div>
+</div>
+</body>
+</html>
